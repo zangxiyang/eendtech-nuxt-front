@@ -2,15 +2,11 @@
 
 export default defineNuxtConfig({
     modules: [
-        'nuxt-headlessui',
         '@nuxtjs/tailwindcss',
         './modules/arco',
-        '@pinia/nuxt'
+        '@pinia/nuxt',
+        '@pinia-plugin-persistedstate/nuxt'
     ],
-    // Optionally change the default prefix.
-    headlessui: {
-        prefix: 'Headless'
-    },
     tailwindcss: {
         // Options
     }

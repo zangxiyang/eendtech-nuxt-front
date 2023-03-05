@@ -1,22 +1,56 @@
 @import "animate.css";
+/*! @import */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 
-
-html{
+html {
     font-size: 10px;
 }
-body{
+
+body {
     background-color: #fff;
 }
 
-*{
+* {
     padding: 0;
     margin: 0;
 }
 
 [v-cloak] {
     display: none;
+}
+
+@layer utilities {
+    @variants responsive {
+        .eend-container {
+            width: 1280px;
+            margin: 0 auto;
+            box-sizing: border-box;
+        }
+
+        .eend-container.small {
+            width: 1140px;
+        }
+        .eend-card.xl-w {
+            width: 256px;
+        }
+    }
+}
+
+
+/*iconfont svg default class*/
+.icon {
+    width: 1em;
+    height: 1em;
+    vertical-align: -0.15em;
+    fill: currentColor;
+    overflow: hidden;
+}
+
+
+::selection {
+    background: rgba(139, 144, 255, 0.87);
+    color: white;
 }

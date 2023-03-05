@@ -17,13 +17,18 @@ export const navBarConfig: NavBarConfig[] = [
     {
         title: "首页",
         link: "/"
-    }/*,
-    {
-        title: "开放平台",
-        link: "/open"
     },
     {
-        title: '加入我们',
-        link: '/join'
-    }*/
+        title: "价格",
+        link: "/price"
+    },
+    {
+        title: "产品",
+        link: "/product"
+    },
+    {
+        title: "更多",
+        link: "/product"
+        //TODO 子菜单
+    }
 ]

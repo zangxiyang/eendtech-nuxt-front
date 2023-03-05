@@ -1,5 +1,7 @@
 <template>
-
+  <eend-header/>
+  <slot/>
+  <eend-footer/>
 </template>
 
 <script setup lang="ts">

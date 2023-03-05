@@ -1,5 +1,5 @@
 <template>
-  <nav class="eend-header w-full ">
+  <nav class="eend-header w-full">
     <div class="navbar fixed top-0 left-0 right-0 border-b border-gray-300 bg-white z-50">
       <div class="navbar-container relative flex w-full h-24 min-h-24 max-h-24 box-border z-50">
         <div class="eend-nav-left h-24 flex items-center">
@@ -18,12 +18,95 @@
           </div>
 
         </div>
-        <div class="eend-nav-right h-24 flex flex-1 items-center justify-end pr-7">
-          <router-link class="ml-6" v-for="item in navBarConfig" :key="item.title" :to="item.link">
-            <a-button size="small" type="text" style="color: #676767">
-              {{ item.title }}
-            </a-button>
-          </router-link>
+        <div class="eend-nav-right h-24 flex flex-1 items-center justify-between pr-7">
+          <div class="w-8/12">
+            <nuxt-link class="ml-6 h-full inline-flex" v-for="item in navBarConfig" :key="item.title" :to="item.link">
+              <a-button size="small" type="text" style="color: #676767">
+                {{ item.title }}
+              </a-button>
+            </nuxt-link>
+          </div>
+          <div class="w-3/12 flex justify-end items-center">
+            <template v-if="checkLogin()">
+              <a-popover trigger="hover">
+                <a-avatar class="cursor-pointer">
+                  <img
+                      alt="avatar"
+                      :src="avatar"
+                      v-if="avatar"
+                  />
+                  <icon-user v-else/>
+                </a-avatar>
+                <template #content>
+                  <div class="user-pop-container w-300">
+                    <header class="header">
+                      <!--头像-->
+                      <div class="flex justify-center items-center">
+                        <a-avatar :size="72">
+                          <template #trigger-icon>
+                            <template v-if="sex === 2">
+                              <icon-woman style="color: deeppink"/>
+                            </template>
+                            <template v-else>
+                              <icon-man style="color: cornflowerblue"/>
+                            </template>
+                          </template>
+                          <template v-if="avatar">
+                            <img alt="avatar" :src="avatar"/>
+                          </template>
+                          <template v-else>
+                            <icon-user/>
+                          </template>
+                        </a-avatar>
+                      </div>
+                      <div class="flex justify-center items-center mt-4">
+                        <span class="userNick text-2xl">{{ userNick }}</span>
+                        <a-tag size="small" class="select-none inline-flex ml-2">
+                          <template #icon>
+                            <icon-user/>
+                          </template>
+                          <span>{{ userName }}</span>
+                        </a-tag>
+                      </div>
+                      <div class="flex justify-center items-center">
+
+                      </div>
+                    </header>
+                    <main class="main-nav mt-12">
+                      <div class="grid grid-cols-2 gap-1.5">
+                        <a-button disabled long>
+                          <template #icon>
+                            <icon-ordered-list/>
+                          </template>
+                          我的订单
+                        </a-button>
+                        <a-button long>
+                          <template #icon>
+                            <icon-settings/>
+                          </template>
+                          个人中心
+                        </a-button>
+                      </div>
+                    </main>
+                    <footer class="mt-10 flex f-row-reverse">
+                      <a-button type="text" style="color: #f20d0d">
+                        <template #icon>
+                          <icon-import/>
+                        </template>
+                        安全退出
+                      </a-button>
+                    </footer>
+                  </div>
+                </template>
+              </a-popover>
+            </template>
+            <template v-else>
+              <span class="text-gray-800 hover:text-gray-500 cursor-pointer transition-colors">登录</span>
+              <span class="select-none ml-2 mr-2">/</span>
+              <span class="text-gray-800 hover:text-gray-500 cursor-pointer transition-colors">注册</span>
+            </template>
+
+          </div>
         </div>
       </div>
       <div ref="dropDownRef"
@@ -41,6 +124,7 @@
 <script setup lang="ts">
 import {navBarConfig} from "~/components/eend-header/config";
 import {Ref} from '#imports';
+import {checkLogin, useUser} from "~/hook/user";
 
 defineComponent({
   name: 'EendHeader'
@@ -51,6 +135,12 @@ const dropDownRef = ref();
 const maskRef = ref();
 
 const show = ref(false);
+
+
+// 用户
+const {userNick, avatar, sex, userName} = useUser();
+
+
 
 const moreAppClick = async () => {
   if (show.value === false) {
